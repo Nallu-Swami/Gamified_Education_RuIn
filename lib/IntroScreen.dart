@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:study_ruin/BottomNavigator.dart';
+import 'package:study_ruin/SideBar.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class ToDoPage extends StatefulWidget {
@@ -33,11 +34,15 @@ class _ToDoPageState extends State<ToDoPage> {
           centerTitle: true,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            onPressed: () {
-              // Handle list icon button press
-            },
-            icon: Icon(Icons.menu),
-          ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SideBar()),
+    );
+  },
+  icon: Icon(Icons.menu),
+),
+
           actions: [
             IconButton(
               onPressed: _addTask,
