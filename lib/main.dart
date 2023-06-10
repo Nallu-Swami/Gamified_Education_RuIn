@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:study_ruin/IntroScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Study_RuIns',
       theme: ThemeData(
-        brightness: Brightness.dark, // Set the overall dark theme
-        primarySwatch: Colors.deepPurple, // Customize the primary color
+        primarySwatch: Colors.deepPurple,
+        brightness: Brightness.dark,
       ),
-      debugShowCheckedModeBanner: false, // Remove the debug tag
+      debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );
   }
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
 class LoginPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController(); // Change the controller name
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class LoginPage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.deepPurple.shade900,
-              Colors.deepPurple.shade700,
+              Colors.purple.shade200,
+              Colors.deepPurple.shade800,
             ],
           ),
         ),
@@ -49,6 +49,15 @@ class LoginPage extends StatelessWidget {
               controller: nameController,
               decoration: const InputDecoration(
                 labelText: 'Name',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
               ),
               style: const TextStyle(color: Colors.white),
             ),
@@ -56,26 +65,35 @@ class LoginPage extends StatelessWidget {
             TextField(
               controller: passwordController,
               decoration: const InputDecoration(
-                labelText: 'Password', // Change the label text
+                labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
               ),
-              obscureText: true, // Set the password field to obscure the text
+              obscureText: true,
               style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 final String name = nameController.text;
-                final String password = passwordController.text; // Change the variable name
+                final String password = passwordController.text;
 
                 // Perform login logic with name and password
 
                 // Example validation
                 if (name.isNotEmpty && password.isNotEmpty) {
-                  // Navigate to the To_do_page or perform necessary actions
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ToDoPage(name: name, password: password), // Change the parameter name
+                      builder: (context) =>
+                          ToDoPage(name: name, password: password),
                     ),
                   );
                 }
@@ -92,3 +110,23 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+/*class ToDoPage extends StatelessWidget {
+  final String name;
+  final String password;
+
+  const ToDoPage({Key? key, required this.name, required this.password})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Welcome, $name!'),
+      ),
+      body: Center(
+        child: Text('To-Do Page'),
+      ),
+    );
+  }
+}*/
