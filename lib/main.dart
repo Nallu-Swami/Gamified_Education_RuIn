@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study_ruin/IntroScreen.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -47,7 +46,7 @@ class LoginPage extends StatelessWidget {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Name',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -58,13 +57,17 @@ class LoginPage extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
               ),
               style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: passwordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -74,6 +77,10 @@ class LoginPage extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Colors.white,
                 ),
               ),
               obscureText: true,
@@ -110,23 +117,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-/*class ToDoPage extends StatelessWidget {
-  final String name;
-  final String password;
-
-  const ToDoPage({Key? key, required this.name, required this.password})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome, $name!'),
-      ),
-      body: Center(
-        child: Text('To-Do Page'),
-      ),
-    );
-  }
-}*/

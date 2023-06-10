@@ -11,8 +11,9 @@ class ToDoPage extends StatefulWidget {
   _ToDoPageState createState() => _ToDoPageState();
 }
 
-class _ToDoPageState extends State<ToDoPage>{
+class _ToDoPageState extends State<ToDoPage> {
   List<String> tasks = [];
+  String selectedTaskType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,18 @@ class _ToDoPageState extends State<ToDoPage>{
           title: Text('Study-Quests'),
           centerTitle: true,
           automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              // Handle list icon button press
+            },
+            icon: Icon(Icons.menu),
+          ),
+          actions: [
+            IconButton(
+              onPressed: _addTask,
+              icon: Icon(Icons.add),
+            ),
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.all(16.0),
@@ -121,35 +134,32 @@ class _ToDoPageState extends State<ToDoPage>{
               ),
               SizedBox(height: 8),
               Expanded(
-                child:ListView.builder(
-  itemCount: tasks.length,
-  itemBuilder: (context, index) {
-    final task = tasks[index];
-    bool isTaskCompleted = false;
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks[index];
+                    bool isTaskCompleted = false;
 
-    return ListTile(
-      leading: Checkbox(
-        value: isTaskCompleted,
-        onChanged: (value) {
-          setState(() {
-            isTaskCompleted = value!;
-            if (isTaskCompleted) {
-              tasks.removeAt(index);
-            }
-          });
-        },
-      ),
-      title: Text(task),
-    );
-  },
-),
+                    return ListTile(
+                      leading: Checkbox(
+                        value: isTaskCompleted,
+                        onChanged: (value) {
+                          setState(() {
+                            isTaskCompleted = value!;
+                            if (isTaskCompleted) {
+                              tasks.removeAt(index);
+                            }
+                          });
+                        },
+                      ),
+                      title: Text(task),
+                      subtitle: Text(getTaskType(task)),
+                    );
+                  },
+                ),
               ),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _addTask,
-          child: Icon(Icons.add),
         ),
       ),
     );
@@ -160,18 +170,97 @@ class _ToDoPageState extends State<ToDoPage>{
       context: context,
       builder: (BuildContext context) {
         String newTask = '';
+
         return AlertDialog(
-          title: Text('Add Task'),
-          content: TextField(
-            onChanged: (value) {
-              newTask = value;
-            },
+          title: Text(
+            'Add Task',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                onChanged: (value) {
+                  newTask = value;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Enter task...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Task Type:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  ChoiceChip(
+                    label: Text('Maths'),
+                    selected: selectedTaskType == 'Maths',
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedTaskType = selected ? 'Maths' : '';
+                      });
+                    },
+                  ),
+                  ChoiceChip(
+                    label: Text('Physics'),
+                    selected: selectedTaskType == 'Physics',
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedTaskType = selected ? 'Physics' : '';
+                      });
+                    },
+                  ),
+                  ChoiceChip(
+                    label: Text('Chemistry'),
+                    selected: selectedTaskType == 'Chemistry',
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedTaskType = selected ? 'Chemistry' : '';
+                      });
+                    },
+                  ),
+                  ChoiceChip(
+                    label: Text('Computer-Science'),
+                    selected: selectedTaskType == 'Computer-Science',
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedTaskType = selected ? 'Computer-Science' : '';
+                      });
+                    },
+                  ),
+                  ChoiceChip(
+                    label: Text('Literature'),
+                    selected: selectedTaskType == 'Literature',
+                    onSelected: (selected) {
+                      setState(() {
+                        selectedTaskType = selected ? 'Literature' : '';
+                      });
+                    },
+                  ),
+                  // Add more options as needed
+                ],
+              ),
+            ],
           ),
           actions: [
             TextButton(
               onPressed: () {
                 setState(() {
-                  tasks.add(newTask);
+                  tasks.add('$newTask');
                 });
                 Navigator.of(context).pop();
               },
@@ -181,6 +270,14 @@ class _ToDoPageState extends State<ToDoPage>{
         );
       },
     );
+  }
+
+  String getTaskType(String task) {
+    final taskParts = task.split(' ');
+    if (taskParts.length > 1) {
+      return '(${taskParts.last})';
+    }
+    return '';
   }
 
   Future<void> _launchURL(String url) async {
