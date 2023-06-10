@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,76 +12,123 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Study_RuIns',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        brightness: Brightness.dark, // Set the overall dark theme
+        primarySwatch: Colors.deepPurple, // Customize the primary color
       ),
-      home: IntroSlider(),
+      home: LoginPage(),
     );
   }
 }
 
-class IntroSlider extends StatefulWidget {
+class LoginPage extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController yearController = TextEditingController();
+
   @override
-  _IntroSliderState createState() => _IntroSliderState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.deepPurple.shade900,
+              Colors.deepPurple.shade700,
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: yearController,
+              decoration: const InputDecoration(
+                labelText: 'Year of Study',
+              ),
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                final String name = nameController.text;
+                final String year = yearController.text;
+                // Perform login logic with name and year
+
+                // Example validation
+                if (name.isNotEmpty && year.isNotEmpty) {
+                  // Navigate to the home screen or perform necessary actions
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(name: name, year: year),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Login'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepPurple.shade800,
+                onPrimary: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _IntroSliderState extends State<IntroSlider> {
-  final List<String> imageList = [
-    'assets/image1.png',
-    'assets/image2.png',
-    'assets/image3.png',
-  ];
+class HomeScreen extends StatelessWidget {
+  final String name;
+  final String year;
 
-  int currentIndex = 0;
+  const HomeScreen({Key? key, required this.name, required this.year}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Study RuIns'),
+        title: const Text('Home'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CarouselSlider(
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - 56,
-              enableInfiniteScroll: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-            ),
-            items: imageList.map((imagePath) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Image.asset(
-                    imagePath,
-                    fit: BoxFit.cover,
-                  );
-                },
-              );
-            }).toList(),
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.black,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Welcome, $name!',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Year of Study: $year',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // Handle button action
-              if (currentIndex == imageList.length - 1) {
-                // Close the intro slider if it's on the last image
-                Navigator.pop(context);
-              } else {
-                // Go to the next image
-                setState(() {
-                  currentIndex++;
-                });
-              }
-            },
-            child: Text('Next'),
-          ),
-        ],
+        ),
       ),
     );
   }
