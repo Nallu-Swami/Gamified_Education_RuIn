@@ -78,7 +78,7 @@ class _ToDoPageState extends State<ToDoPage>{
                             ),
                             SizedBox(width: 8),
                             Text(
-                              'Experience: 50',
+                              'Experience: 0/100',
                               style: TextStyle(
                                 color: const Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 18,
@@ -95,7 +95,7 @@ class _ToDoPageState extends State<ToDoPage>{
                             ),
                             SizedBox(width: 8),
                             Text(
-                              'Struggle: 1',
+                              'Struggle: 1/NeverEnds',
                               style: TextStyle(
                                 color: const Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 18,
@@ -121,11 +121,11 @@ class _ToDoPageState extends State<ToDoPage>{
               ),
               SizedBox(height: 8),
               Expanded(
-                child: ListView.builder(
+                child:ListView.builder(
   itemCount: tasks.length,
   itemBuilder: (context, index) {
     final task = tasks[index];
-    bool isTaskCompleted = false; // Set the initial completion status of the task
+    bool isTaskCompleted = false;
 
     return ListTile(
       leading: Checkbox(
@@ -133,6 +133,9 @@ class _ToDoPageState extends State<ToDoPage>{
         onChanged: (value) {
           setState(() {
             isTaskCompleted = value!;
+            if (isTaskCompleted) {
+              tasks.removeAt(index);
+            }
           });
         },
       ),
