@@ -13,7 +13,6 @@ class ToDoPage extends StatefulWidget {
 
 class _ToDoPageState extends State<ToDoPage> {
   List<String> tasks = [];
-  String selectedTaskType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -134,30 +133,44 @@ class _ToDoPageState extends State<ToDoPage> {
               ),
               SizedBox(height: 8),
               Expanded(
-                child: ListView.builder(
-                  itemCount: tasks.length,
-                  itemBuilder: (context, index) {
-                    final task = tasks[index];
-                    bool isTaskCompleted = false;
+                child: ListView.separated(
+  itemCount: tasks.length,
+  separatorBuilder: (context, index) => Divider(),
+  itemBuilder: (context, index) {
+    final task = tasks[index];
+    bool isTaskCompleted = false;
 
-                    return ListTile(
-                      leading: Checkbox(
-                        value: isTaskCompleted,
-                        onChanged: (value) {
-                          setState(() {
-                            isTaskCompleted = value!;
-                            if (isTaskCompleted) {
-                              tasks.removeAt(index);
-                            }
-                          });
-                        },
-                      ),
-                      title: Text(task),
-                      subtitle: Text(getTaskType(task)),
-                    );
-                  },
-                ),
-              ),
+    return Container(
+      color: Color.fromARGB(255, 16, 50, 161), // Customize the tile background color as needed
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage('https://example.com/task_image.png'), // Replace with the URL of the task's image
+        ),
+        title: Text(
+          task,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        trailing: Checkbox(
+          value: isTaskCompleted,
+          onChanged: (value) {
+            setState(() {
+              isTaskCompleted = value!;
+              if (isTaskCompleted) {
+                tasks.removeAt(index);
+              }
+            });
+          },
+        ),
+      ),
+    );
+  },
+),
+),
             ],
           ),
         ),
@@ -170,6 +183,7 @@ class _ToDoPageState extends State<ToDoPage> {
       context: context,
       builder: (BuildContext context) {
         String newTask = '';
+        String selectedTaskType = '';
 
         return AlertDialog(
           title: Text(
@@ -211,7 +225,9 @@ class _ToDoPageState extends State<ToDoPage> {
                     selected: selectedTaskType == 'Maths',
                     onSelected: (selected) {
                       setState(() {
-                        selectedTaskType = selected ? 'Maths' : '';
+                        if (selected) {
+                          selectedTaskType = 'Maths';
+                        }
                       });
                     },
                   ),
@@ -220,7 +236,9 @@ class _ToDoPageState extends State<ToDoPage> {
                     selected: selectedTaskType == 'Physics',
                     onSelected: (selected) {
                       setState(() {
-                        selectedTaskType = selected ? 'Physics' : '';
+                        if (selected) {
+                          selectedTaskType = 'Physics';
+                        }
                       });
                     },
                   ),
@@ -229,7 +247,9 @@ class _ToDoPageState extends State<ToDoPage> {
                     selected: selectedTaskType == 'Chemistry',
                     onSelected: (selected) {
                       setState(() {
-                        selectedTaskType = selected ? 'Chemistry' : '';
+                        if (selected) {
+                          selectedTaskType = 'Chemistry';
+                        }
                       });
                     },
                   ),
@@ -238,7 +258,9 @@ class _ToDoPageState extends State<ToDoPage> {
                     selected: selectedTaskType == 'Computer-Science',
                     onSelected: (selected) {
                       setState(() {
-                        selectedTaskType = selected ? 'Computer-Science' : '';
+                        if (selected) {
+                          selectedTaskType = 'Computer-Science';
+                        }
                       });
                     },
                   ),
@@ -247,7 +269,9 @@ class _ToDoPageState extends State<ToDoPage> {
                     selected: selectedTaskType == 'Literature',
                     onSelected: (selected) {
                       setState(() {
-                        selectedTaskType = selected ? 'Literature' : '';
+                        if (selected) {
+                          selectedTaskType = 'Literature';
+                        }
                       });
                     },
                   ),
@@ -260,7 +284,7 @@ class _ToDoPageState extends State<ToDoPage> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  tasks.add('$newTask');
+                  tasks.add('$newTask ($selectedTaskType)');
                 });
                 Navigator.of(context).pop();
               },
@@ -270,14 +294,6 @@ class _ToDoPageState extends State<ToDoPage> {
         );
       },
     );
-  }
-
-  String getTaskType(String task) {
-    final taskParts = task.split(' ');
-    if (taskParts.length > 1) {
-      return '(${taskParts.last})';
-    }
-    return '';
   }
 
   Future<void> _launchURL(String url) async {
