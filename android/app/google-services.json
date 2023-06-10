@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54935107815",
+    "project_id": "study-ruins",
+    "storage_bucket": "study-ruins.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54935107815:android:25fe0cb7772c33973d0a42",
+        "android_client_info": {
+          "package_name": "com.example.study_ruin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54935107815-92g9a3cv1qgas0hmugqastg8okqa6vrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDGFoHPUsBVXLA4qiadpqYjmSMEFiTzJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54935107815-2m1trub0j8b789apleakt3ioo97a4rvg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
