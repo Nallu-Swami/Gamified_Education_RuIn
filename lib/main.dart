@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:study_ruin/To_do_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark, // Set the overall dark theme
         primarySwatch: Colors.deepPurple, // Customize the primary color
       ),
+      debugShowCheckedModeBanner: false, // Remove the debug tag
       home: LoginPage(),
     );
   }
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
 
 class LoginPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController yearController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController(); // Change the controller name
 
   @override
   Widget build(BuildContext context) {
@@ -51,27 +54,28 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: yearController,
+              controller: passwordController,
               decoration: const InputDecoration(
-                labelText: 'Year of Study',
+                labelText: 'Password', // Change the label text
               ),
-              keyboardType: TextInputType.number,
+              obscureText: true, // Set the password field to obscure the text
               style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 final String name = nameController.text;
-                final String year = yearController.text;
-                // Perform login logic with name and year
+                final String password = passwordController.text; // Change the variable name
+
+                // Perform login logic with name and password
 
                 // Example validation
-                if (name.isNotEmpty && year.isNotEmpty) {
-                  // Navigate to the home screen or perform necessary actions
+                if (name.isNotEmpty && password.isNotEmpty) {
+                  // Navigate to the To_do_page or perform necessary actions
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomeScreen(name: name, year: year),
+                      builder: (context) => ToDoPage(name: name, password: password), // Change the parameter name
                     ),
                   );
                 }
@@ -83,51 +87,6 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  final String name;
-  final String year;
-
-  const HomeScreen({Key? key, required this.name, required this.year}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.black,
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Welcome, $name!',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Year of Study: $year',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
