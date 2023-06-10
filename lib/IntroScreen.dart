@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ToDoPage extends StatelessWidget {
+class ToDoPage extends StatefulWidget {
   final String name;
   final String password;
 
   const ToDoPage({Key? key, required this.name, required this.password}) : super(key: key);
 
   @override
+  _ToDoPageState createState() => _ToDoPageState();
+}
+
+class _ToDoPageState extends State<ToDoPage>{
+  List<String> tasks = [];
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Handle the back button press
-        Navigator.pop(context); // Navigate back to the previous screen
-        return false; // Return false to allow the back button press
+        Navigator.pop(context);
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text('Study-Quests'),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromARGB(255, 23, 0, 49),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,14 +52,6 @@ class ToDoPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Welcome, $name!',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                         SizedBox(height: 16),
                         Row(
                           children: [
@@ -64,7 +63,7 @@ class ToDoPage extends StatelessWidget {
                             Text(
                               'Health: 100',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 18,
                               ),
                             ),
@@ -81,7 +80,7 @@ class ToDoPage extends StatelessWidget {
                             Text(
                               'Experience: 50',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 18,
                               ),
                             ),
@@ -98,7 +97,7 @@ class ToDoPage extends StatelessWidget {
                             Text(
                               'Struggle: 1',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: const Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 18,
                               ),
                             ),
@@ -113,37 +112,71 @@ class ToDoPage extends StatelessWidget {
               Divider(),
               SizedBox(height: 16),
               Text(
-                'Tasks',
+                'Student-Objectives',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 8),
               Expanded(
-                child: ListView(
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.check),
-                      title: Text('Task 1skdbj'),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.check),
-                      title: Text('Task 2'),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.check),
-                      title: Text('Task 3'),
-                    ),
-                    // Add more list tiles for additional tasks
-                  ],
-                ),
+                child: ListView.builder(
+  itemCount: tasks.length,
+  itemBuilder: (context, index) {
+    final task = tasks[index];
+    bool isTaskCompleted = false; // Set the initial completion status of the task
+
+    return ListTile(
+      leading: Checkbox(
+        value: isTaskCompleted,
+        onChanged: (value) {
+          setState(() {
+            isTaskCompleted = value!;
+          });
+        },
+      ),
+      title: Text(task),
+    );
+  },
+),
               ),
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _addTask,
+          child: Icon(Icons.add),
+        ),
       ),
+    );
+  }
+
+  void _addTask() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newTask = '';
+        return AlertDialog(
+          title: Text('Add Task'),
+          content: TextField(
+            onChanged: (value) {
+              newTask = value;
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  tasks.add(newTask);
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Add'),
+            ),
+          ],
+        );
+      },
     );
   }
 
