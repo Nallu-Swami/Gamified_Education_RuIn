@@ -35,8 +35,8 @@ class _SideBarState extends State<SideBar> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorites'),
+            leading: Icon(Icons.shop_2_sharp),
+            title: Text('Shop'),
             onTap: () {
               // Handle the onTap action for the Favorites option
               Navigator.pop(context);
