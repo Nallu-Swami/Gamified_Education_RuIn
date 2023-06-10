@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:study_ruin/IntroScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Study_RuIns',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
+        brightness: Brightness.dark,
       ),
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
@@ -27,96 +30,88 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            color: Colors.deepPurpleAccent,
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.purple.shade200,
+              Colors.deepPurple.shade800,
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                SizedBox(height: 32),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      hintText: 'Name',
-                      border: InputBorder.none,
-                      icon: Icon(Icons.person, color: Colors.deepPurpleAccent),
-                    ),
-                    style: TextStyle(color: Colors.deepPurpleAccent),
-                  ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                SizedBox(height: 16),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: InputBorder.none,
-                      icon: Icon(Icons.lock, color: Colors.deepPurpleAccent),
-                    ),
-                    obscureText: true,
-                    style: TextStyle(color: Colors.deepPurpleAccent),
-                  ),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    final String name = nameController.text;
-                    final String password = passwordController.text;
-
-                    // Perform login logic with name and password
-
-                    // Example validation
-                    if (name.isNotEmpty && password.isNotEmpty) {
-                      // Navigate to the ToDoPage or perform necessary actions
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ToDoPage(name: name, password: password),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text('Login'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepPurple,
-                    onPrimary: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
-                ),
-              ],
+              ),
+              style: const TextStyle(color: Colors.white),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            TextField(
+              controller: passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+              ),
+              obscureText: true,
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                final String name = nameController.text;
+                final String password = passwordController.text;
+
+                // Perform login logic with name and password
+
+                // Example validation
+                if (name.isNotEmpty && password.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ToDoPage(name: name, password: password),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Login'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepPurple.shade800,
+                onPrimary: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class ToDoPage extends StatelessWidget {
+/*class ToDoPage extends StatelessWidget {
   final String name;
   final String password;
 
@@ -134,5 +129,4 @@ class ToDoPage extends StatelessWidget {
       ),
     );
   }
-}
-
+}*/
