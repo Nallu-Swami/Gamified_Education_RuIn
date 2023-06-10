@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:study_ruin/To_do_page.dart';
+import 'package:study_ruin/IntroScreen.dart';
 
 void main() {
   runApp(const MyApp());
