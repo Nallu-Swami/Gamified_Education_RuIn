@@ -44,6 +44,16 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Login',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32, // Increased font size
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2, // Added letter spacing for style
+              ),
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: nameController,
               decoration: InputDecoration(
